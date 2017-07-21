@@ -1,9 +1,6 @@
 # coding=utf-8
-
 from http.server import HTTPServer, BaseHTTPRequestHandler
-
 import binascii
-
 
 class TestHTTPHandle(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -19,6 +16,8 @@ class TestHTTPHandle(BaseHTTPRequestHandler):
         self.wfile.write(buf)
     def do_POST(self):
         buf = binascii.a2b_hex("5932686c5a584a7a0a")
+        datas = self.rfile.read(int(self.headers['content-length']))
+        print("POST :"+str(datas))
         self.protocal_version = "HTTP/1.1"
         self.server_version = 'nginx/1.4.6 (Ubuntu)'
         self.send_response(200)
